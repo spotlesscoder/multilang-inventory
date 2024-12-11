@@ -1,0 +1,38 @@
+name: Pull Request
+
+on:
+    pull_request:
+        branches:
+            - main
+            - 'releases/*'
+
+# Cancel in-progress workflow runs if a newer run for the same PR is triggered
+concurrency:
+    group: ${{ github.workflow }}-${{ github.head_ref }}
+    cancel-in-progress: true
+
+jobs:
+    code-quality:
+        runs-on: ubuntu-latest
+        strategy:
+            fail-fast: true
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+              with:
+                  depth: 0
+
+            - name: Set up Node.js
+              uses: actions/setup-node@v3
+              with:
+                  node-version: '22'
+
+            - name: Install commitlint and conventional config
+              run: |
+                  npm install -g @commitlint/cli @commitlint/config-conventional
+
+            - name: Commitlint check for commits
+              run: |
+                  git fetch origin main
+                  git log origin/main..HEAD --pretty=format:%H | xargs -I {} sh -c 'git show --quiet --format=%B {} | commitlint'

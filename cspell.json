@@ -1,0 +1,30 @@
+{
+    "dictionaries": [
+        "en",
+        "de"
+    ],
+    "ignorePaths": [
+        "node_modules/**",
+        "build/**",
+        "dist/**",
+        "target/**"
+    ],
+    "language": "en",
+    "version": "0.2",
+    "words": [
+        "APPL",
+        "Clippy",
+        "commitlint",
+        "dustypomerleau",
+        "MIRI",
+        "multilang",
+        "njpwerner",
+        "nxrs",
+        "oderwat",
+        "rustup",
+        "serayuzgur",
+        "spotlesscoder",
+        "tamasfe",
+        "Trackpad"
+    ]
+}

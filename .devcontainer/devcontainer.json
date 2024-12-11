@@ -1,0 +1,45 @@
+{
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "dbaeumer.vscode-eslint",
+                "dustypomerleau.rust-syntax",
+                "eamodio.gitlens",
+                "esbenp.prettier-vscode",
+                "github.vscode-github-actions",
+                "GitHub.vscode-pull-request-github",
+                "ms-azuretools.vscode-docker",
+                "ms-vscode.vscode-typescript-next",
+                "njpwerner.autodocstring",
+                "nrwl.angular-console",
+                "oderwat.indent-rainbow",
+                "rust-lang.rust-analyzer",
+                "SonarSource.sonarlint-vscode",
+                "streetsidesoftware.code-spell-checker",
+                "streetsidesoftware.code-spell-checker-cspell-bundled-dictionaries",
+                "streetsidesoftware.code-spell-checker-german",
+                "tamasfe.even-better-toml",
+                "vscjava.vscode-java-pack"
+            ],
+            "settings": {
+                "terminal.integrated.defaultProfile.linux": "zsh"
+            }
+        }
+    },
+    "dockerComposeFile": "docker-compose.yml",
+    "features": {
+        "docker-in-docker": "latest",
+        "ghcr.io/devcontainers/features/java:1": {
+            "version": "17"
+        },
+        "ghcr.io/devcontainers/features/node:1": {
+            "version": "lts"
+        }
+    },
+    "forwardPorts": [3000, 8080, 5005],
+    "name": "multilang-inventory",
+    "postCreateCommand": ".devcontainer/postCreateCommand.sh",
+    "service": "devcontainer",
+    "shutdownAction": "stopCompose",
+    "workspaceFolder": "/workspace"
+}
