@@ -1,0 +1,26 @@
+{
+    "name": "api-ts-e2e",
+    "version": "0.0.1",
+    "private": true,
+    "nx": {
+        "implicitDependencies": [
+            "api-ts"
+        ],
+        "targets": {
+            "e2e": {
+                "executor": "@nx/jest:jest",
+                "outputs": [
+                    "{projectRoot}/test-output/jest/coverage"
+                ],
+                "options": {
+                    "jestConfig": "api-ts-e2e/jest.config.ts",
+                    "passWithNoTests": true
+                },
+                "dependsOn": [
+                    "api-ts:build",
+                    "api-ts:serve"
+                ]
+            }
+        }
+    }
+}

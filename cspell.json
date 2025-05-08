@@ -1,14 +1,6 @@
 {
-    "dictionaries": [
-        "en",
-        "de"
-    ],
-    "ignorePaths": [
-        "node_modules/**",
-        "build/**",
-        "dist/**",
-        "target/**"
-    ],
+    "dictionaries": ["en", "de"],
+    "ignorePaths": ["node_modules/**", "build/**", "dist/**", "target/**"],
     "language": "en",
     "version": "0.2",
     "words": [
@@ -24,6 +16,7 @@
         "rustup",
         "serayuzgur",
         "spotlesscoder",
+        "springframework",
         "tamasfe",
         "Trackpad"
     ]
