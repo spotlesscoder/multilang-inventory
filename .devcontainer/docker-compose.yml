@@ -1,9 +1,28 @@
 services:
     devcontainer:
-        image: mcr.microsoft.com/devcontainers/rust:1-1-bullseye
+        image: mcr.microsoft.com/devcontainers/rust:bullseye
         command: sleep infinity
         volumes:
             - ..:/workspace:cached
+    mongo:
+        image: mongo:latest
         ports:
-            # for CodeGPT vscode plugin
-            - '54112:54112'
+            - 27018:27017
+        volumes:
+            - mongodb_data:/data/db
+
+    redis:
+        image: redis:latest
+        ports:
+            - 6378:6379
+
+    redisinsight:
+        image: redis/redisinsight:latest
+        ports:
+            - 5548:5540
+        volumes:
+            - redisinsight:/data
+
+volumes:
+    mongodb_data:
+    redisinsight:

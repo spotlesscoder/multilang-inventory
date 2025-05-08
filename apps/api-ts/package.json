@@ -39,6 +39,11 @@
                         "buildTarget": "api-ts:build:production"
                     }
                 }
+            },
+            "test": {
+                "options": {
+                    "passWithNoTests": true
+                }
             }
         }
     }

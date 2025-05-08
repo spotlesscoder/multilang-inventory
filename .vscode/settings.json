@@ -32,5 +32,11 @@
     },
     "workbench.iconTheme": "eq-material-theme-icons-darker",
     "workbench.localHistory.maxFileEntries": 99999,
-    "workbench.localHistory.maxFileSize": 32000
+    "workbench.localHistory.maxFileSize": 32000,
+    "github.copilot.enable": {
+        "*": false,
+        "plaintext": false,
+        "markdown": false,
+        "scminput": false
+    }
 }

@@ -28,6 +28,7 @@
         "skipLibCheck": true,
         "sourceMap": false,
         "strict": true,
+        "strictPropertyInitialization": false,
         "target": "es2022",
         "verbatimModuleSyntax": false
     }
