@@ -10,6 +10,6 @@ export class ProductsService {
 
     async create(product: Product) {
         this.logger.log('Creating product');
-        await this.repository.create(product);
+        return this.repository.create(product);
     }
 }

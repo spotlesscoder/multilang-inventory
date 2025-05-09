@@ -16,3 +16,7 @@ export class Product {
 }
 
 export const ProductSchema = SchemaFactory.createForClass(Product);
+export const ProductModel = {
+    name: Product.name,
+    schema: ProductSchema,
+};
