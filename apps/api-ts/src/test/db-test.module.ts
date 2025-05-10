@@ -14,7 +14,7 @@ export async function createDb(
                 dbName: id(),
                 retryAttempts: 10,
                 serverSelectionTimeoutMS: 1000,
-                uri: 'mongodb://mongo:27017',
+                uri: 'mongodb://db:27017',
             }),
         }),
         MongooseModule.forFeature(models),
