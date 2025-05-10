@@ -5,11 +5,18 @@
     "version": "0.2",
     "words": [
         "APPL",
+        "aventrix",
         "bson",
         "bullmq",
         "Clippy",
         "commitlint",
+        "Dcompile",
+        "diffplug",
         "dustypomerleau",
+        "errorprone",
+        "javac",
+        "jnanoid",
+        "mapstruct",
         "MCP",
         "MIRI",
         "monodon",
@@ -19,6 +26,7 @@
         "nxrocks",
         "nxrs",
         "oderwat",
+        "projectlombok",
         "redisinsight",
         "rustup",
         "serayuzgur",
@@ -27,6 +35,7 @@
         "springframework",
         "tamasfe",
         "testdata",
-        "Trackpad"
+        "Trackpad",
+        "Xplugin"
     ]
 }

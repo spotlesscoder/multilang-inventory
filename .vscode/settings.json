@@ -38,5 +38,6 @@
         "plaintext": false,
         "markdown": false,
         "scminput": false
-    }
+    },
+    "java.configuration.updateBuildConfiguration": "automatic"
 }

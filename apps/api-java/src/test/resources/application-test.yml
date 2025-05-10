@@ -1,0 +1,2 @@
+db:
+  URI: mongodb://db:27017
