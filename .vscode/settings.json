@@ -34,7 +34,7 @@
     "workbench.localHistory.maxFileEntries": 99999,
     "workbench.localHistory.maxFileSize": 32000,
     "github.copilot.enable": {
-        "*": false,
+        "*": true,
         "plaintext": false,
         "markdown": false,
         "scminput": false
