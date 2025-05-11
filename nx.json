@@ -2,7 +2,8 @@
     "$schema": "./node_modules/nx/schemas/nx-schema.json",
     "namedInputs": {
         "default": ["{projectRoot}/**/*", "sharedGlobals"],
-        "production": ["default"]
+        "production": ["default"],
+        "sharedGlobals": []
     },
     "plugins": [
         {

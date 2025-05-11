@@ -1,0 +1,1 @@
+{"version":3,"file":"add-product.request.schema.d.ts","sourceRoot":"","sources":["../../../../../../../../libs/shared/src/lib/products/commands/add/add-product.request.schema.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,CAAC,EAAE,MAAM,KAAK,CAAC;AAExB,MAAM,MAAM,oBAAoB,GAAG,CAAC,CAAC,KAAK,CAAC,OAAO,uBAAuB,CAAC,CAAC;AAE3E,eAAO,MAAM,uBAAuB;;;;;;;;;EAGlC,CAAC"}

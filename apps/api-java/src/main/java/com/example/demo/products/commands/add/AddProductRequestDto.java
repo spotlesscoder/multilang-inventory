@@ -1,12 +1,13 @@
-package com.example.demo.products.api;
+package com.example.demo.products.commands.add;
 
 import com.example.demo.products.db.Product;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
-public class CreateProductDto {
+public class AddProductRequestDto {
 
   @NotBlank @Size(min = 1, max = 255) private String category;
 
