@@ -1,4 +1,4 @@
-package com.example.demo.infra;
+package com.example.demo.infra.db;
 
 import static com.aventrix.jnanoid.jnanoid.NanoIdUtils.randomNanoId;
 

@@ -1,4 +1,4 @@
-package com.example.demo.infra;
+package com.example.demo.infra.db;
 
 import com.mongodb.client.MongoDatabase;
 import org.junit.jupiter.api.AfterEach;

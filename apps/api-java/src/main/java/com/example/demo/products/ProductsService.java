@@ -1,5 +1,7 @@
 package com.example.demo.products;
 
+import com.example.demo.products.db.Product;
+import com.example.demo.products.db.ProductsRepository;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -11,7 +13,7 @@ public class ProductsService {
     this.repository = repository;
   }
 
-  public void create(Product product) {
-    repository.save(product);
+  public Product create(Product product) {
+    return repository.save(product);
   }
 }

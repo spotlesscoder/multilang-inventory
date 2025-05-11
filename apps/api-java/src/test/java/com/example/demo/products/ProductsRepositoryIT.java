@@ -2,7 +2,9 @@ package com.example.demo.products;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import com.example.demo.infra.RepositoryTestBase;
+import com.example.demo.infra.db.RepositoryTestBase;
+import com.example.demo.products.db.Product;
+import com.example.demo.products.db.ProductsRepository;
 import com.mongodb.assertions.Assertions;
 import java.util.List;
 import org.junit.jupiter.api.Test;
