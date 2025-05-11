@@ -16,7 +16,7 @@ describe(ProductsService.name, () => {
                 {
                     provide: ProductsRepository,
                     useValue: {
-                        create: jest
+                        ins: jest
                             .fn()
                             .mockImplementation((entity) =>
                                 Promise.resolve(withId(entity))
@@ -39,10 +39,10 @@ describe(ProductsService.name, () => {
 
     it('creates product successfully', async () => {
         // setup
-        const repositoryCreate = jest.spyOn(repository, 'create');
+        const repositoryCreate = jest.spyOn(repository, 'ins');
 
         // run
-        const product = await underTest.create(sampleProduct());
+        const product = await underTest.add(sampleProduct());
 
         // verify
         expect(product).toBeDefined();

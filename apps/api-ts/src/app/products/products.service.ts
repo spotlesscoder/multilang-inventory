@@ -8,8 +8,8 @@ export class ProductsService {
 
     constructor(private readonly repository: ProductsRepository) {}
 
-    async create(product: Product) {
+    async add(product: Product) {
         this.logger.log('Creating product');
-        return this.repository.create(product);
+        return this.repository.ins(product);
     }
 }

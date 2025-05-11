@@ -34,7 +34,7 @@ describe(ProductsRepository.name, () => {
         const doc = sampleProduct();
 
         // run
-        const created = await underTest.create(doc);
+        const created = await underTest.ins(doc);
 
         // verify
         const read = await model.findById(created._id).lean();

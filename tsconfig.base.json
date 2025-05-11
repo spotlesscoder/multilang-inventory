@@ -23,7 +23,6 @@
         "noUnusedLocals": true,
         "paths": {
             "@api/*": ["apps/api-ts/*"],
-            "@shared": ["libs/shared/src/index.ts"],
             "@shared/*": ["libs/shared/src/*"]
         },
         "pretty": true,

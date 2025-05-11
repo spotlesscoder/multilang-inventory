@@ -9,7 +9,7 @@ export class ProductsRepository {
         @InjectModel(Product.name) private readonly model: Model<ProductDoc>
     ) {}
 
-    create(product: Product): Promise<Product> {
+    ins(product: Product): Promise<Product> {
         return this.model.create(product);
     }
 
