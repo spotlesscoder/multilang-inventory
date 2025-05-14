@@ -1,4 +1,4 @@
-use crate::db::id;
+use crate::infra::db::id;
 use futures::stream::TryStreamExt;
 use mongodb::{bson::doc, options::IndexOptions, Collection, Database, IndexModel};
 use serde::{Deserialize, Serialize};

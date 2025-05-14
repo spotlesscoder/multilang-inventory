@@ -1,7 +1,6 @@
+use crate::infra::db::db;
 use mongodb::bson::doc;
 use nanoid::nanoid;
-
-use crate::db::db;
 
 #[allow(dead_code)]
 pub(crate) async fn test_db() -> Result<mongodb::Database, anyhow::Error> {
