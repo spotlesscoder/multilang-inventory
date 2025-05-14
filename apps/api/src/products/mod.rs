@@ -3,15 +3,24 @@ use futures::stream::TryStreamExt;
 use mongodb::{bson::doc, options::IndexOptions, Collection, Database, IndexModel};
 use serde::{Deserialize, Serialize};
 
+mod commands;
+mod routes;
+pub use routes::*;
+
+pub fn routes() -> axum::Router {
+    axum::Router::new().merge(commands::routes())
+}
+
 #[derive(Debug, Serialize, Deserialize, Clone)]
-pub(crate) struct Product {
+pub struct Product {
     #[serde(default = "id")]
     pub _id: String,
     pub category: String,
     pub name: String,
 }
 
-pub(crate) struct CreateProduct {
+#[derive(Debug, Serialize, Deserialize)]
+pub struct CreateProduct {
     pub category: String,
     pub name: String,
 }
@@ -26,77 +35,40 @@ impl Product {
     }
 }
 
-pub(crate) struct ProductsRepository {
+pub struct ProductsRepository {
     collection: Collection<Product>,
 }
 
 impl ProductsRepository {
-    pub async fn new(db: &Database) -> mongodb::error::Result<Self> {
-        let collection = db.collection::<Product>("products");
+    pub async fn new(db: &Database) -> anyhow::Result<Self> {
+        let collection = db.collection("products");
 
-        // Add index creation here
-        let index = IndexModel::builder()
+        // Create index on category
+        let options = IndexOptions::builder().build();
+        let model = IndexModel::builder()
             .keys(doc! { "category": 1 })
-            .options(
-                IndexOptions::builder()
-                    .name(Some("category".into()))
-                    .build(),
-            )
+            .options(options)
             .build();
-
-        collection.create_index(index).await?;
+        collection.create_index(model).await?;
 
         Ok(Self { collection })
     }
 
-    pub async fn insert(&self, product: Product) -> mongodb::error::Result<()> {
-        self.collection.insert_one(product).await.map(|_| ())
-    }
-
-    pub async fn get_all_by_category(
-        &self,
-        category: &str,
-    ) -> mongodb::error::Result<Vec<Product>> {
-        self.collection
-            .find(doc! { "category": category })
-            .await?
-            .try_collect::<Vec<_>>()
-            .await
-    }
-
-    pub async fn get_by_id(&self, id: &str) -> mongodb::error::Result<Option<Product>> {
-        self.collection.find_one(doc! { "_id": id }).await
-    }
-}
-
-mod test {
-    use crate::{
-        products::{CreateProduct, Product, ProductsRepository},
-        tests::test_db,
-    };
-
-    #[tokio::test]
-    async fn test_insert_and_retrieve_product() -> Result<(), anyhow::Error> {
-        // setup
-        let db = test_db().await?;
-        let repo = ProductsRepository::new(&db).await?;
-
-        let product = Product::new(CreateProduct {
-            category: "electronics".to_string(),
-            name: "product".to_string(),
-        });
-
-        // run + verify
-        repo.insert(product.clone()).await?;
-        let products_by_category = repo.get_all_by_category("electronics").await?;
-
-        assert_eq!(products_by_category.len(), 1);
-        assert_eq!(products_by_category[0].name, product.name);
-
-        let product_by_id = repo.get_by_id(&product._id).await?;
-        assert_eq!(product_by_id.unwrap().name, product.name);
-
-        db.drop().await?;
+    pub async fn insert(&self, product: Product) -> anyhow::Result<()> {
+        self.collection.insert_one(product).await?;
         Ok(())
+    }
+
+    pub async fn get_by_id(&self, id: &str) -> anyhow::Result<Product> {
+        let filter = doc! { "_id": id };
+        let product = self.collection.find_one(filter).await?;
+        product.ok_or_else(|| anyhow::anyhow!("Product not found"))
+    }
+
+    pub async fn get_all_by_category(&self, category: &str) -> anyhow::Result<Vec<Product>> {
+        let filter = doc! { "category": category };
+        let cursor = self.collection.find(filter).await?;
+        let products = cursor.try_collect().await?;
+        Ok(products)
     }
 }

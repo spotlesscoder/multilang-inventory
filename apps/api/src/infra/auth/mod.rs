@@ -32,7 +32,7 @@ pub struct Claims {
     pub exp: usize,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct AuthUser {
     pub user_id: String,
     pub role: Role,
