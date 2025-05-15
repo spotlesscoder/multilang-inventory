@@ -1,16 +1,17 @@
 use axum::{
-    extract::{FromRequestParts, TypedHeader},
-    headers::{authorization::Bearer, Authorization},
-    http::request::Parts,
+    extract::FromRequestParts,
+    http::{request::Parts, StatusCode},
     RequestPartsExt,
+};
+use axum_extra::{
+    headers::{authorization::Bearer, Authorization},
+    TypedHeader,
 };
 use jsonwebtoken::{DecodingKey, EncodingKey, Validation};
 use serde::{Deserialize, Serialize};
 use std::fmt::Display;
 
-pub const JWT_SECRET: &[u8] = b"your_secret_key_here";
-
-#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Eq)]
 pub enum Role {
     User,
     Admin,
@@ -32,7 +33,7 @@ pub struct Claims {
     pub exp: usize,
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Serialize, Deserialize, Clone, Eq, PartialEq)]
 pub struct AuthUser {
     pub user_id: String,
     pub role: Role,
@@ -45,14 +46,15 @@ where
     type Rejection = axum::http::StatusCode;
 
     async fn from_request_parts(parts: &mut Parts, _state: &S) -> Result<Self, Self::Rejection> {
+        let jwt_secret = std::env::var("JWT_SECRET").unwrap();
         let TypedHeader(Authorization(bearer)) = parts
             .extract::<TypedHeader<Authorization<Bearer>>>()
             .await
-            .map_err(|_| axum::http::StatusCode::UNAUTHORIZED)?;
+            .map_err(|_| StatusCode::UNAUTHORIZED)?;
 
         let token_data = jsonwebtoken::decode::<Claims>(
             bearer.token(),
-            &DecodingKey::from_secret(JWT_SECRET),
+            &DecodingKey::from_secret(jwt_secret.as_bytes()),
             &Validation::default(),
         )
         .map_err(|_| axum::http::StatusCode::UNAUTHORIZED)?;
@@ -65,6 +67,7 @@ where
 }
 
 pub fn create_token(user_id: &str, role: Role) -> Result<String, jsonwebtoken::errors::Error> {
+    let jwt_secret = std::env::var("JWT_SECRET").unwrap();
     let expiration = chrono::Utc::now()
         .checked_add_signed(chrono::Duration::hours(24))
         .expect("valid timestamp")
@@ -79,7 +82,7 @@ pub fn create_token(user_id: &str, role: Role) -> Result<String, jsonwebtoken::e
     jsonwebtoken::encode(
         &jsonwebtoken::Header::default(),
         &claims,
-        &EncodingKey::from_secret(JWT_SECRET),
+        &EncodingKey::from_secret(jwt_secret.as_bytes()),
     )
 }
 
