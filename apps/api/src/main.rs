@@ -11,7 +11,6 @@ use infra::{
     auth::{authorize, AuthUser, Role},
     context::AppContext,
     db::db,
-    rate_limiter::RateLimiterLayer,
 };
 use std::time::Duration;
 use tower_http::cors::{Any, CorsLayer};
@@ -29,7 +28,7 @@ async fn main() {
     let cache = crate::infra::cache::RedisCache::new().unwrap();
 
     // Initialize AppContext
-    let app_context = AppContext::new(db, cache);
+    let ctx = AppContext::new(db, cache);
 
     let cors = CorsLayer::new()
         .allow_origin(Any)
@@ -43,17 +42,12 @@ async fn main() {
         .route("/protected", get(protected_route))
         .route("/admin", get(admin_route))
         // Product routes
-        .route("/products/:id", get(products::get_product_by_id))
-        .route("/products", post(products::create_product));
-
-    // Configure rate limiter (100 requests per minute per user)
-    let rate_limiter = RateLimiterLayer::new(app_context.cache.clone(), 100);
+        .route("/products/:id", get(products::get_product_by_id));
 
     // Main app with middleware and mounted routes
     let app = Router::new()
         .nest("/api", api_routes)
-        .layer(Extension(app_context))
-        .layer(rate_limiter)
+        .layer(Extension(ctx))
         .layer(cors);
 
     let port = std::env::var("PORT").unwrap_or_else(|_| "3000".to_string());
