@@ -1,7 +1,0 @@
-{
-    "recommendations": [
-        "ms-playwright.playwright",
-        "dbaeumer.vscode-eslint",
-        "firsttris.vscode-jest-runner"
-    ]
-}
